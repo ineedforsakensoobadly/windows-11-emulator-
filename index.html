@@ -1038,135 +1038,64 @@
                                     <span class="text-sm font-bold">Your Library</span>
                                 </div>
                                 <div class="mt-8 flex flex-col gap-4">
-                                    <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Playlists</span>
-                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate">Coding Beats</div>
-                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate">Lo-Fi Windows 11</div>
-                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate">Temu Top 50</div>
+                                    <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">Quick Play</span>
+                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate" onclick="loadAudioPreset(1)">Song #1</div>
+                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate" onclick="loadAudioPreset(2)">Song #2</div>
+                                    <div class="text-sm font-semibold opacity-70 hover:opacity-100 cursor-pointer truncate" onclick="loadAudioPreset(3)">Song #3</div>
                                 </div>
                             </div>
                             <!-- Main Content -->
-                            <div class="flex-1 bg-gradient-to-b from-[#1e1e1e] to-[#121212] p-8 overflow-y-auto">
-                                <h2 class="text-2xl font-bold mb-6">Good evening</h2>
-                                <div class="grid grid-cols-3 gap-4 mb-8">
-                                    ${[
-                                        {t: 'Liked Songs', i: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=100&h=100&fit=crop'},
-                                        {t: 'Daily Mix 1', i: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=100&h=100&fit=crop'},
-                                        {t: 'Discover Weekly', i: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?w=100&h=100&fit=crop'}
-                                    ].map(card => `
-                                        <div class="flex items-center gap-4 bg-white/5 hover:bg-white/10 transition-colors rounded overflow-hidden cursor-pointer group">
-                                            <img src="${card.i}" class="w-16 h-16 shadow-lg">
-                                            <span class="font-bold text-sm">${card.t}</span>
-                                            <div class="ml-auto mr-4 w-10 h-10 bg-[#1db954] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all shadow-xl">
-                                                <img src="https://img.icons8.com/material-rounded/24/000000/play--v1.png" class="w-5 h-5">
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <h3 class="text-xl font-bold mb-4">Made for You</h3>
-                                <div class="grid grid-cols-4 gap-6">
-                                    ${[
-                                        {t: 'Focus Flow', s: 'By Temu Spotify', i: 'https://images.unsplash.com/photo-1514525253361-bee8718a300c?w=300&h=300&fit=crop'},
-                                        {t: 'Deep House', s: 'The best house music', i: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&h=300&fit=crop'},
-                                        {t: 'Chill Vibes', s: 'Relax and unwind', i: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=300&fit=crop'},
-                                        {t: 'Techno Night', s: 'Pure energy', i: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=300&h=300&fit=crop'}
-                                    ].map(item => `
-                                        <div class="bg-[#181818] hover:bg-[#282828] p-4 rounded-lg transition-colors cursor-pointer group">
-                                            <div class="relative mb-4">
-                                                <img src="${item.i}" class="w-full aspect-square object-cover rounded shadow-2xl">
-                                                <div class="absolute bottom-2 right-2 w-12 h-12 bg-[#1db954] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all shadow-xl">
-                                                    <img src="https://img.icons8.com/material-rounded/24/000000/play--v1.png" class="w-6 h-6">
-                                                </div>
-                                            </div>
-                                            <div class="font-bold text-sm mb-1 truncate">${item.t}</div>
-                                            <div class="text-xs text-zinc-400 line-clamp-2">${item.s}</div>
-                                        </div>
-                                    `).join('')}
+                            <div class="flex-1 bg-gradient-to-b from-[#1e1e1e] to-[#121212] p-8 overflow-y-auto flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="w-64 h-64 mx-auto mb-8 bg-gradient-to-br from-[#1db954] to-[#1ed760] rounded-lg shadow-2xl flex items-center justify-center">
+                                        <img id="spotify-album-art" src="https://img.icons8.com/color/96/spotify.png" class="w-32 h-32">
+                                    </div>
+                                    <h2 id="spotify-track-title" class="text-3xl font-bold mb-2">Select a Song</h2>
+                                    <p id="spotify-track-artist" class="text-lg text-zinc-400 mb-8">Choose from the sidebar</p>
                                 </div>
                             </div>
                         </div>
                         <!-- Player Bar -->
-                        <div class="h-20 bg-[#181818] border-t border-zinc-800 px-4 flex items-center justify-between">
+                        <div class="h-24 bg-[#181818] border-t border-zinc-800 px-4 flex items-center justify-between">
                             <div class="flex items-center gap-4 w-1/3">
-                                <img id="player-art" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=60&h=60&fit=crop" class="w-14 h-14 rounded shadow">
+                                <div id="player-art-small" class="w-14 h-14 rounded shadow bg-zinc-800 flex items-center justify-center">
+                                    <img src="https://img.icons8.com/color/48/spotify.png" class="w-8 h-8">
+                                </div>
                                 <div class="flex flex-col">
-                                    <span id="player-title" class="text-sm font-semibold hover:underline cursor-pointer">Focus Flow</span>
-                                    <span id="player-artist" class="text-[11px] text-zinc-400 hover:underline cursor-pointer">Temu Spotify</span>
+                                    <span id="player-title" class="text-sm font-semibold">No track loaded</span>
+                                    <span id="player-artist" class="text-[11px] text-zinc-400">-</span>
                                 </div>
                                 <img src="https://img.icons8.com/material-outlined/24/1db954/like.png" class="w-5 h-5 cursor-pointer">
                             </div>
                             <div class="flex flex-col items-center gap-2 w-1/3">
                                 <div class="flex items-center gap-6">
                                     <img src="https://img.icons8.com/material-rounded/24/ffffff/shuffle.png" class="w-4 h-4 opacity-70 hover:opacity-100 cursor-pointer">
-                                    <img src="https://img.icons8.com/material-rounded/24/ffffff/previous.png" class="w-5 h-5 opacity-70 hover:opacity-100 cursor-pointer" onclick="spotifyPrev()">
-                                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer" onclick="spotifyTogglePlay(this)">
-                                        <img id="spotify-play-icon" src="https://img.icons8.com/material-rounded/24/000000/play--v1.png" class="w-5 h-5">
+                                    <img src="https://img.icons8.com/material-rounded/24/ffffff/previous.png" class="w-5 h-5 opacity-70 hover:opacity-100 cursor-pointer" onclick="spotifyPrevTrack()">
+                                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform cursor-pointer" onclick="spotifyTogglePlayback()">
+                                        <img id="spotify-play-icon" src="https://img.icons8.com/material-rounded/24/000000/play--v1.png" class="w-6 h-6">
                                     </div>
-                                    <img src="https://img.icons8.com/material-rounded/24/ffffff/next.png" class="w-5 h-5 opacity-70 hover:opacity-100 cursor-pointer" onclick="spotifyNext()">
+                                    <img src="https://img.icons8.com/material-rounded/24/ffffff/next.png" class="w-5 h-5 opacity-70 hover:opacity-100 cursor-pointer" onclick="spotifyNextTrack()">
                                     <img src="https://img.icons8.com/material-rounded/24/ffffff/repeat.png" class="w-4 h-4 opacity-70 hover:opacity-100 cursor-pointer">
                                 </div>
                                 <div class="flex items-center gap-2 w-full max-w-md">
-                                    <span id="spotify-time" class="text-[10px] text-zinc-400 min-w-[30px] text-right">0:00</span>
-                                    <div class="flex-1 h-1 bg-zinc-600 rounded-full cursor-pointer relative group" onclick="spotifySeek(event, this)">
-                                        <div id="spotify-progress" class="absolute top-0 left-0 h-full bg-white group-hover:bg-[#1db954] rounded-full" style="width: 0%"></div>
+                                    <span id="spotify-current-time" class="text-[10px] text-zinc-400 min-w-[30px] text-right">0:00</span>
+                                    <div class="flex-1 h-1 bg-zinc-600 rounded-full cursor-pointer relative group" onclick="spotifySeekTrack(event, this)">
+                                        <div id="spotify-progress-bar" class="absolute top-0 left-0 h-full bg-white group-hover:bg-[#1db954] rounded-full transition-colors" style="width: 0%"></div>
                                     </div>
-                                    <span class="text-[10px] text-zinc-400">3:45</span>
+                                    <span id="spotify-duration" class="text-[10px] text-zinc-400">0:00</span>
                                 </div>
                             </div>
                             <div class="flex items-center justify-end gap-3 w-1/3">
-                                <img src="https://img.icons8.com/material-rounded/24/ffffff/microphone.png" class="w-4 h-4 opacity-70 hover:opacity-100 cursor-pointer">
-                                <img src="https://img.icons8.com/material-rounded/24/ffffff/queue.png" class="w-4 h-4 opacity-70 hover:opacity-100 cursor-pointer">
                                 <img src="https://img.icons8.com/material-rounded/24/ffffff/speaker.png" class="w-4 h-4 opacity-70 hover:opacity-100 cursor-pointer">
-                                <div class="w-24 h-1 bg-zinc-600 rounded-full cursor-pointer relative group">
-                                    <div id="spotify-vol-bar" class="absolute top-0 left-0 h-full bg-white group-hover:bg-[#1db954] rounded-full" style="width: 70%"></div>
+                                <div class="w-24 h-1 bg-zinc-600 rounded-full cursor-pointer relative group" onclick="spotifySetVolume(event, this)">
+                                    <div id="spotify-volume-bar" class="absolute top-0 left-0 h-full bg-white group-hover:bg-[#1db954] rounded-full transition-colors" style="width: 70%"></div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Hidden Audio Element -->
+                        <audio id="spotify-audio-player" style="display: none;"></audio>
                     </div>
-                `,
-                onMount: (win) => {
-                    win.dataset.isPlaying = 'false';
-                    win.dataset.currentTime = '0';
-                    win.dataset.duration = '225'; // 3:45
-                    
-                    const updateUI = () => {
-                        if (win.dataset.isPlaying === 'true') {
-                            let current = parseInt(win.dataset.currentTime);
-                            current++;
-                            if (current > parseInt(win.dataset.duration)) current = 0;
-                            win.dataset.currentTime = current;
-                            
-                            const progress = (current / parseInt(win.dataset.duration)) * 100;
-                            win.querySelector('#spotify-progress').style.width = progress + '%';
-                            
-                            const mins = Math.floor(current / 60);
-                            const secs = current % 60;
-                            win.querySelector('#spotify-time').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
-                        }
-                    };
-
-                    const interval = setInterval(() => {
-                        if (!document.getElementById(win.id)) {
-                            clearInterval(interval);
-                            return;
-                        }
-                        updateUI();
-                    }, 1000);
-                    
-                    // Sync initial volume
-                    const volBar = win.querySelector('#spotify-vol-bar');
-                    if (volBar) volBar.style.width = state.volume + '%';
-
-                    // Make main cards playable
-                    win.querySelectorAll('.group.cursor-pointer').forEach((card, idx) => {
-                        card.addEventListener('click', () => {
-                            spotifyTrackIndex = idx % spotifyTracks.length;
-                            spotifyUpdateTrack();
-                            const playIcon = win.querySelector('#spotify-play-icon');
-                            win.dataset.isPlaying = 'true';
-                            if (playIcon) playIcon.src = 'https://img.icons8.com/material-rounded/24/000000/pause--v1.png';
-                        });
-                    });
-                }
+                `
             },
             'this-pc': {
                 title: 'File Explorer',
@@ -3166,52 +3095,6 @@
             win.querySelector('#spotify-progress').style.width = (percent * 100) + '%';
         };
 
-        const spotifyTracks = [
-            {t: 'Focus Flow', a: 'Temu Spotify', i: 'https://images.unsplash.com/photo-1514525253361-bee8718a300c?w=60&h=60&fit=crop'},
-            {t: 'Techno Night', a: 'DJ Pulse', i: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=60&h=60&fit=crop'},
-            {t: 'Chill Vibes', a: 'Lofi Girl', i: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=60&h=60&fit=crop'}
-        ];
-        let spotifyTrackIndex = 0;
-
-        window.spotifyNext = () => {
-            spotifyTrackIndex = (spotifyTrackIndex + 1) % spotifyTracks.length;
-            spotifyUpdateTrack();
-            // Force play on skip
-            const win = document.getElementById('window-temu-spotify');
-            if (win) {
-                win.dataset.isPlaying = 'true';
-                const icon = win.querySelector('#spotify-play-icon');
-                if (icon) icon.src = 'https://img.icons8.com/material-rounded/24/000000/pause--v1.png';
-            }
-        };
-
-        window.spotifyPrev = () => {
-            spotifyTrackIndex = (spotifyTrackIndex - 1 + spotifyTracks.length) % spotifyTracks.length;
-            spotifyUpdateTrack();
-            // Force play on skip
-            const win = document.getElementById('window-temu-spotify');
-            if (win) {
-                win.dataset.isPlaying = 'true';
-                const icon = win.querySelector('#spotify-play-icon');
-                if (icon) icon.src = 'https://img.icons8.com/material-rounded/24/000000/pause--v1.png';
-            }
-        };
-
-        function spotifyUpdateTrack() {
-            const win = document.getElementById('window-temu-spotify');
-            if (!win) return;
-            const track = spotifyTracks[spotifyTrackIndex];
-            const art = win.querySelector('#player-art');
-            const title = win.querySelector('#player-title');
-            const artist = win.querySelector('#player-artist');
-            if (art) art.src = track.i;
-            if (title) title.innerText = track.t;
-            if (artist) artist.innerText = track.a;
-            win.dataset.currentTime = 0;
-            win.querySelector('#spotify-progress').style.width = '0%';
-            win.querySelector('#spotify-time').innerText = '0:00';
-        }
-
         // Network Functions
         function syncBrowserConnectivity(win = null) {
             const isOnline = state.wifi.enabled && state.wifi.connectedTo;
@@ -3443,19 +3326,44 @@
                 e.preventDefault();
                 toggleDesktopVisibility();
             }
-            // Alt+F2 - Cycle through windows
+            // Alt+F2 - Switch to next window (single press)
             if (e.altKey && e.key === 'F2') {
                 e.preventDefault();
-                if (!altF2Active) {
-                    altF2Apps = Object.keys(state.activeApps);
-                    if (altF2Apps.length === 0) return;
-                    altF2Active = true;
-                    altF2Index = 0;
-                    showAltF2Switcher();
-                } else {
-                    altF2Index = (altF2Index + 1) % altF2Apps.length;
-                    updateAltF2Switcher();
+                const appIds = Object.keys(state.activeApps);
+                if (appIds.length === 0) {
+                    showNotification('Window Switcher', 'No windows open');
+                    return;
                 }
+                
+                // Get current focused window
+                const currentFocused = Object.keys(state.activeApps).pop();
+                const currentIndex = appIds.indexOf(currentFocused);
+                
+                // Switch to next window (or first if none focused)
+                const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % appIds.length : 0;
+                const nextAppId = appIds[nextIndex];
+                
+                // Show brief visual feedback
+                const tempBox = document.createElement('div');
+                tempBox.className = 'fixed inset-0 flex items-center justify-center z-[9999]';
+                tempBox.style.background = 'rgba(0,0,0,0.6)';
+                tempBox.style.pointerEvents = 'none';
+                const app = apps[nextAppId];
+                tempBox.innerHTML = `
+                    <div class="bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-2xl" style="min-width: 300px;">
+                        <div class="flex flex-col items-center gap-3">
+                            <img src="${app.icon}" class="w-16 h-16" alt="${app.title}">
+                            <div class="text-lg font-semibold text-center dark:text-white">${app.title}</div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(tempBox);
+                
+                // Focus the window
+                focusWindow(nextAppId);
+                
+                // Remove visual feedback after brief delay
+                setTimeout(() => tempBox.remove(), 500);
             }
             // F5 - Refresh explorer
             if (e.key === 'F5') {
@@ -3464,19 +3372,6 @@
                     e.preventDefault();
                     updateExplorerUI(explorer);
                     showNotification('Explorer', 'Refreshed');
-                }
-            }
-        });
-
-        // Alt key release - switch to selected window
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'Alt' && altF2Active) {
-                altF2Active = false;
-                if (altF2Box) {
-                    const selectedApp = altF2Apps[altF2Index];
-                    focusWindow(selectedApp);
-                    altF2Box.remove();
-                    altF2Box = null;
                 }
             }
         });
@@ -3657,6 +3552,102 @@
         function newFolder() {
             showNotification('New Folder', 'New folder created on desktop');
         }
+
+        // Spotify Audio Player Functions
+        let spotifyAudioPlayer = null;
+        let spotifyCurrentTrack = 0;
+        const spotifyTracks = [
+            {
+                title: 'Song #1',
+                artist: 'Track 1',
+                url: 'https://open.spotify.com/embed/track/7DQS9dDYhawDeg95jn0xcR',
+                cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop'
+            },
+            {
+                title: 'Song #2',
+                artist: 'Track 2',
+                url: 'https://open.spotify.com/embed/track/3YCMYhkGbaHM57t2amoIVi',
+                cover: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=300&h=300&fit=crop'
+            },
+            {
+                title: 'Song #3',
+                artist: 'Track 3',
+                url: 'https://open.spotify.com/embed/track/4Md9beL6rRxjjdhjQdQgIc',
+                cover: 'https://images.unsplash.com/photo-1459749411177-042180ce673c?w=300&h=300&fit=crop'
+            }
+        ];
+
+        function loadAudioPreset(trackNumber) {
+            spotifyCurrentTrack = trackNumber - 1;
+            const track = spotifyTracks[spotifyCurrentTrack];
+            
+            // Update UI
+            const albumArt = document.getElementById('spotify-album-art');
+            const trackTitle = document.getElementById('spotify-track-title');
+            const trackArtist = document.getElementById('spotify-track-artist');
+            const playerTitle = document.getElementById('player-title');
+            const playerArtist = document.getElementById('player-artist');
+            const playerArtSmall = document.getElementById('player-art-small');
+            
+            if (albumArt) albumArt.src = track.cover;
+            if (trackTitle) trackTitle.textContent = track.title;
+            if (trackArtist) trackArtist.textContent = track.artist;
+            if (playerTitle) playerTitle.textContent = track.title;
+            if (playerArtist) playerArtist.textContent = track.artist;
+            if (playerArtSmall) playerArtSmall.innerHTML = `<img src="${track.cover}" class="w-full h-full object-cover rounded">`;
+            
+            // Load the track via iframe embed (Spotify requires iframe for playback)
+            const spotifyWin = document.getElementById('window-temu-spotify');
+            if (spotifyWin) {
+                const mainContent = spotifyWin.querySelector('.flex-1.bg-gradient-to-b');
+                if (mainContent) {
+                    mainContent.innerHTML = `
+                        <iframe 
+                            src="${track.url}?utm_source=generator" 
+                            width="100%" 
+                            height="100%" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy"
+                            style="border-radius: 12px;"
+                            onerror="console.error('Failed to load track ${trackNumber}'); showNotification('Spotify', 'Error loading track. This song may not be available.');"
+                        ></iframe>
+                    `;
+                }
+            }
+            
+            console.log('Loading track:', trackNumber, 'URL:', track.url);
+            showNotification('Spotify', `Now playing: ${track.title}`);
+        }
+
+        function spotifyTogglePlayback() {
+            // Since we're using Spotify embeds, we can't control playback directly
+            // The user needs to click play in the embedded player
+            showNotification('Spotify', 'Click play in the player above');
+        }
+
+        function spotifyNextTrack() {
+            spotifyCurrentTrack = (spotifyCurrentTrack + 1) % spotifyTracks.length;
+            loadAudioPreset(spotifyCurrentTrack + 1);
+        }
+
+        function spotifyPrevTrack() {
+            spotifyCurrentTrack = (spotifyCurrentTrack - 1 + spotifyTracks.length) % spotifyTracks.length;
+            loadAudioPreset(spotifyCurrentTrack + 1);
+        }
+
+        function spotifySeekTrack(event, element) {
+            // Seeking not available with Spotify embeds
+        }
+
+        function spotifySetVolume(event, element) {
+            const rect = element.getBoundingClientRect();
+            const percent = ((event.clientX - rect.left) / rect.width) * 100;
+            const volBar = document.getElementById('spotify-volume-bar');
+            if (volBar) volBar.style.width = percent + '%';
+        }
+
     </script>
 </body>
 </html>
